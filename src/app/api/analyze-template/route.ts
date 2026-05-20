@@ -3,6 +3,7 @@ import mammoth from 'mammoth';
 import fs from 'fs';
 import path from 'path';
 
+// Force rebuild - updated 2026-05-20
 export async function POST(request: NextRequest) {
   try {
     const { templatePath } = await request.json();
