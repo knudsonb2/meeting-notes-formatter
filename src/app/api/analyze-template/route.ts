@@ -29,18 +29,8 @@ export async function POST(request: NextRequest) {
     const textResult = await mammoth.extractRawText({ buffer });
     const rawText = textResult.value;
 
-    // Extract HTML with styling to get structure
-    const htmlResult = await mammoth.convertToHtml(
-      { buffer },
-      {
-        styleMap: [
-          "p[style-name='Heading 1'] => h1:fresh",
-          "p[style-name='Heading 2'] => h2:fresh",
-          "p[style-name='Heading 3'] => h3:fresh",
-          "p[style-name='Title'] => h1.title:fresh",
-        ],
-      },
-    );
+    // Extract HTML to get structure
+    const htmlResult = await mammoth.convertToHtml({ buffer });
     const html = htmlResult.value;
 
     // Parse comprehensive structure
