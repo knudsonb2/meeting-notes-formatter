@@ -30,15 +30,17 @@ export async function POST(request: NextRequest) {
     const rawText = textResult.value;
 
     // Extract HTML with styling to get structure
-    const htmlResult = await mammoth.convertToHtml({
-      buffer,
-      styleMap: [
-        "p[style-name='Heading 1'] => h1:fresh",
-        "p[style-name='Heading 2'] => h2:fresh",
-        "p[style-name='Heading 3'] => h3:fresh",
-        "p[style-name='Title'] => h1.title:fresh",
-      ],
-    });
+    const htmlResult = await mammoth.convertToHtml(
+      { buffer },
+      {
+        styleMap: [
+          "p[style-name='Heading 1'] => h1:fresh",
+          "p[style-name='Heading 2'] => h2:fresh",
+          "p[style-name='Heading 3'] => h3:fresh",
+          "p[style-name='Title'] => h1.title:fresh",
+        ],
+      },
+    );
     const html = htmlResult.value;
 
     // Parse comprehensive structure
@@ -222,7 +224,9 @@ function parseTemplateStructure(html: string, rawText: string) {
     if (bulletItems && bulletItems.length > 0) {
       lists.push({
         type: 'bullet',
-        items: bulletItems.map((item) => item.replace(/^[\-\*•]\s+/, '')),
+        items: bulletItems.map((item: string) =>
+          item.replace(/^[\-\*•]\s+/, ''),
+        ),
         sectionIndex: i,
       });
       section.hasList = true;
@@ -233,7 +237,9 @@ function parseTemplateStructure(html: string, rawText: string) {
     if (numberedItems && numberedItems.length > 0) {
       lists.push({
         type: 'numbered',
-        items: numberedItems.map((item) => item.replace(/^\d+\.\s+/, '')),
+        items: numberedItems.map((item: string) =>
+          item.replace(/^\d+\.\s+/, ''),
+        ),
         sectionIndex: i,
       });
       section.hasList = true;

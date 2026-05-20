@@ -45,10 +45,8 @@ export default function DownloadButton({ result }: DownloadButtonProps) {
       const docx = await import('docx');
       console.log('docx imported successfully');
 
-      const fileSaverModule = await import('file-saver');
-      const saveAs =
-        fileSaverModule.default || fileSaverModule.saveAs || fileSaverModule;
-      console.log('file-saver imported successfully', typeof saveAs);
+      const fileSaver = await import('file-saver');
+      console.log('file-saver imported successfully');
 
       const {
         Document,
@@ -57,7 +55,6 @@ export default function DownloadButton({ result }: DownloadButtonProps) {
         HeadingLevel,
         AlignmentType,
         Packer,
-        BorderStyle,
       } = docx;
 
       console.log('Creating document structure...');
@@ -284,14 +281,6 @@ export default function DownloadButton({ result }: DownloadButtonProps) {
               },
               paragraph: {
                 spacing: { before: 240, after: 120 },
-                border: {
-                  bottom: {
-                    color: '000000',
-                    space: 1,
-                    style: BorderStyle.SINGLE,
-                    size: 6,
-                  },
-                },
               },
             },
           ],
@@ -314,13 +303,7 @@ export default function DownloadButton({ result }: DownloadButtonProps) {
 
       console.log('Saving file:', filename);
 
-      if (typeof saveAs === 'function') {
-        saveAs(blob, filename);
-      } else if (typeof saveAs.saveAs === 'function') {
-        saveAs.saveAs(blob, filename);
-      } else {
-        throw new Error('saveAs function not found in file-saver module');
-      }
+      fileSaver.saveAs(blob, filename);
 
       alert('Word document generated successfully!');
     } catch (error) {

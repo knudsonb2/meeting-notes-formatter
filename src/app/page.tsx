@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Callout, Icon } from '@blueprintjs/core';
 import TemplateAnalyzer from '@/components/TemplateAnalyzer';
 import MeetingNotesInput from '@/components/MeetingNotesInput';
 import PreviewPanel from '@/components/PreviewPanel';
@@ -39,6 +40,39 @@ export default function Home() {
   return (
     <div className='min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 p-6'>
       <div className='max-w-7xl mx-auto'>
+        {/* Security Notice Banner */}
+        <Callout
+          intent='success'
+          icon={<Icon icon='shield' size={20} />}
+          style={{
+            marginBottom: '1.5rem',
+            background: 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)',
+            border: '2px solid #22c55e',
+            borderRadius: '12px',
+            padding: '1rem 1.5rem',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <div style={{ flex: 1 }}>
+              <strong style={{ fontSize: '1.05rem', color: '#166534' }}>
+                🔒 Privacy & Security Notice
+              </strong>
+              <p
+                style={{
+                  margin: '0.25rem 0 0 0',
+                  color: '#15803d',
+                  fontSize: '0.95rem',
+                }}
+              >
+                <strong>No data is saved, stored, or shared.</strong> All
+                processing occurs locally in your browser. Your meeting notes
+                and documents remain private and are never transmitted to
+                external servers.
+              </p>
+            </div>
+          </div>
+        </Callout>
+
         <header className='text-center mb-8'>
           <h1 className='text-4xl font-bold text-gray-800 mb-2'>
             Meeting Notes Template Formatter
